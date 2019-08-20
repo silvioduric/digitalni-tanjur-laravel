@@ -47,6 +47,9 @@
                                 <a class="nav-link" href="{{ url('/jelovnik') }}">{{ __('Jelovnici') }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/vina') }}">{{ __('Vinska karta') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Prijava') }}</a>
                             </li>
                             @if (Route::has('register'))

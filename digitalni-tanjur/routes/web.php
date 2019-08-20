@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('posts', 'PostsController');
 Route::resource('jelovnik', 'JelovnikController');
+Route::resource('vina', 'VinskaKartaController');
