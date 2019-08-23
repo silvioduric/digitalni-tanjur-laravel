@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jelovnik;
+use App\JelovnikStavka;
 
 class JelovnikController extends Controller
 {
@@ -15,7 +16,9 @@ class JelovnikController extends Controller
     public function index()
     {
         $jelovnici = Jelovnik::all();
-        return view('neregistrirani_views.index')->with('jelovnici', $jelovnici);
+        $jelovniciStavka = JelovnikStavka::all();
+        
+        return view('neregistrirani_views.index')->with('jelovnici', $jelovnici)->with('jelovniciStavka', $jelovniciStavka);
     }
 
     /**
