@@ -12,8 +12,9 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background: url('images/pozadina.jpg');
+                background-blend-mode: screen;
+                color: #fff;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -40,16 +41,24 @@
                 top: 18px;
             }
 
+            .top-left {
+                position: absolute;
+                left: 10px;
+                top: 18px;
+            }
+
             .content {
                 text-align: center;
             }
 
             .title {
                 font-size: 84px;
+                font-weight: bold;
+                text-decoration: underline;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -63,7 +72,7 @@
             }
         </style>
     </head>
-    <body>
+    <body >
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -75,6 +84,11 @@
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}">Registracija</a>
                         @endif
+
+                        <a href="{{ url('/jelovnik') }}">Jelovnici</a>
+
+                        <a href="{{ url('/vina') }}">Vinska karta</a>
+
                     @endauth
                 </div>
             @endif

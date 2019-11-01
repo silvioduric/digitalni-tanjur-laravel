@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVinskaKartasTable extends Migration
+class CreateMenisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateVinskaKartasTable extends Migration
      */
     public function up()
     {
-        Schema::create('vinska_kartas', function (Blueprint $table) {
-            $table->bigIncrements('id_karte');
-            $table->string('naslov');
+        Schema::create('menis', function (Blueprint $table) {
+            $table->bigIncrements('id_meni');
+            $table->string('naziv', 255);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateVinskaKartasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vinska_kartas');
+        Schema::dropIfExists('menis');
     }
 }
