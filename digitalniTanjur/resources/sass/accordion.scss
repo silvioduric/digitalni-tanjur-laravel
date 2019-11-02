@@ -1,0 +1,22 @@
+.accordion {
+  width: 100%;
+
+  h5 {
+    button {
+      font-size: 24px;
+      padding-left: 0;
+      text-decoration: none !important;
+      color: black;
+    }
+  }
+
+  .card {
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid #00000020 !important;
+  }
+
+  .stavka {
+    display: block;
+    font-size: 20px;
+  }
+}
