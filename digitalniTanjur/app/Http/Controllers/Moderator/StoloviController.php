@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Meni;
-use App\MeniStavka;
-use App\Stavka;
+use App\Stol;
 use Illuminate\Support\Facades\Auth;
 
-class MeniController extends Controller
+class StoloviController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +16,7 @@ class MeniController extends Controller
      */
     public function index()
     {
-        $meni = Meni::all();
-        $meniStavka = MeniStavka::all();
-        $stavka = Stavka::all();
-        return view('meni.index')->with('meni', $meni)->with('meniStavka', $meniStavka)->with('stavka', $stavka);
+        return view('moderator.stolovi.index')->with('stolovi', Stol::all());
     }
 
     /**
@@ -31,7 +26,7 @@ class MeniController extends Controller
      */
     public function create()
     {
-        //
+        return view('moderator.stolovi.create');
     }
 
     /**
@@ -42,7 +37,11 @@ class MeniController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $noviStol = new Stol();
+        $noviStol->naziv =  $request->naziv;
+        $noviStol->status =  $request->status;
+        $noviStol->save();
+        return redirect()->route('moderator.stolovi.index');
     }
 
     /**
@@ -64,7 +63,12 @@ class MeniController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('moderator.stolovi.edit')->with(['stolovi' => Stol::find($id)]);
+    }
+
+    public function status($id)
+    {
+        return view('moderator.stolovi.status')->with(['stolovi' => Stol::find($id)]);
     }
 
     /**
@@ -76,7 +80,29 @@ class MeniController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stol = Stol::find($id);
+        $stol->naziv = $request->stol;
+        $stol->save();
+
+        return redirect()->route('moderator.stolovi.index');
+    }
+
+    public function statusUpdate(Request $request, $id)
+    {
+        $stol = Stol::find($id);
+        $stol->status = $request->status;
+        $stol->save();
+
+        return redirect()->route('moderator.stolovi.index');
+    }
+
+
+    public function delete(Request $request, $id)
+    {
+        $stol = Stol::find($id);
+        $stol->delete();
+
+        return redirect()->route('moderator.stolovi.index');
     }
 
     /**

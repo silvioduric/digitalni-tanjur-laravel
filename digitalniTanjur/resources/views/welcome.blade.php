@@ -74,10 +74,17 @@
             @if (Route::has('login'))
                 <div class="top-left links">
                     <a href="/meni">Meni</a>
+                    <a href="/vinska">Vinska karta</a>
                 </div>
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        @if (Auth::user()->hasAnyRole('Administrator'))
+                            <a href="{{ route('admin.index') }}">Home admin</a>
+                        @elseif (Auth::user()->hasAnyRole('Moderator'))
+                            <a href="{{ route('moderator.index') }}">Home moderator</a>
+                        @else
+                            <a href="{{ url('/home') }}">Home korisnik</a>
+                        @endif
                     @else
                         <a href="{{ route('login') }}">Login</a>
 

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Dobrodošli na moderatorske stranice!
                 </div>
             </div>
         </div>

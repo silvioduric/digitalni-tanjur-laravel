@@ -24,12 +24,50 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('meni', 'MeniController');
+Route::resource('vinska', 'VinskaController');
+
 
 // Route::resource('admin', 'AdminController')->middleware(['auth', 'roles.admin']);
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'roles.admin'])->name('admin.')->group(function(){
     Route::resource('/korisnici', 'KorisniciController')->except(['show', 'create', 'store']);
     Route::resource('/', 'AdminController');
+});
+
+Route::namespace('Moderator')->prefix('moderator')->middleware(['auth', 'roles.moderator'])->name('moderator.')->group(function(){
+    // Stolovi rute
+    Route::resource('/stolovi', 'StoloviController');
+    Route::get('/stolovi/{stolovi}/status', 'StoloviController@status')->name('stolovi.status');
+    Route::put('/stolovi/{stolovi}', 'StoloviController@statusUpdate')->name('stolovi.statusUpdate');
+    Route::get('/stolovi/create', 'StoloviController@create')->name('stolovi.create');
+    Route::put('/stolovi/store/novi', 'StoloviController@store')->name('stolovi.store.novi');
+    Route::post('/stolovi/{stolovi}/update', 'StoloviController@update')->name('stolovi.update');
+    Route::get('/stolovi/{stolovi}/delete', 'StoloviController@delete')->name('stolovi.delete');
+
+    // Meni rute
+    Route::resource('/meni', 'MeniController');
+    Route::get('/meni/{id}/create', 'MeniController@create')->name('meni.create');
+    Route::put('/meni/store/{id}/novi', 'MeniController@store')->name('meni.store.novi');
+    Route::get('/meni/{id}/delete', 'MeniController@delete')->name('meni.delete');
+
+    // Vinska rute
+    Route::resource('/vinska', 'VinskaController');
+    Route::get('/vinska/{id}/create', 'VinskaController@create')->name('vinska.create');
+    Route::put('/vinska/store/{id}/novi', 'VinskaController@store')->name('vinska.store.novi');
+    Route::get('/vinska/{id}/delete', 'VinskaController@delete')->name('vinska.delete');
+
+    //Kuponi rute
+    Route::resource('/kuponi', 'KuponiController');
+    Route::get('/kuponi/{id}/editNaziv', 'KuponiController@editNaziv')->name('kuponi.editNaziv');
+    Route::put('/kuponi/{id}/updateNaziv', 'KuponiController@updateNaziv')->name('kuponi.updateNaziv');
+    Route::get('/kuponi/{id}/editOpis', 'KuponiController@editOpis')->name('kuponi.editOpis');
+    Route::put('/kuponi/{id}/updateOpis', 'KuponiController@updateOpis')->name('kuponi.updateOpis');
+    Route::get('/kuponi/{id}/editBodovi', 'KuponiController@editBodovi')->name('kuponi.editBodovi');
+    Route::put('/kuponi/{id}/updateBodovi', 'KuponiController@updateBodovi')->name('kuponi.updateBodovi');
+    Route::get('/kuponi/{id}/delete', 'KuponiController@delete')->name('kuponi.delete');
+    Route::put('/kuponi/store/novi', 'KuponiController@store')->name('kuponi.store.novi');
+
+    Route::resource('/', 'ModeratorController');
 });
 
 // Route::resource('moderator', 'ModeratorController')->middleware(['auth', 'roles']);

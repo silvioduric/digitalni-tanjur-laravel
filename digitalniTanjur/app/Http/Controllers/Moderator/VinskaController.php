@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Meni;
-use App\MeniStavka;
+use App\VinskaKarta;
+use App\VinskaKartaStavka;
 use App\Stavka;
 use Illuminate\Support\Facades\Auth;
 
-class MeniController extends Controller
+class VinskaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class MeniController extends Controller
      */
     public function index()
     {
-        $meni = Meni::all();
-        $meniStavka = MeniStavka::all();
+        $vinska = VinskaKarta::all();
+        $vinskaStavka = VinskaKartaStavka::all();
         $stavka = Stavka::all();
-        return view('meni.index')->with('meni', $meni)->with('meniStavka', $meniStavka)->with('stavka', $stavka);
+        return view('moderator.vinska.index')->with('vinska', $vinska)->with('vinskaStavka', $vinskaStavka)->with('stavka', $stavka);
     }
 
     /**
@@ -29,9 +29,9 @@ class MeniController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        return view('moderator.vinska.create')->with('id_karte', $id);
     }
 
     /**
@@ -40,9 +40,18 @@ class MeniController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $novaStavka = Stavka::create([
+            'naziv' => $request->naziv
+        ]);
+
+        $vinskaStavka = VinskaKartaStavka::create([
+            'vinska_karta_id' => $id,
+            'stavka_id' => $novaStavka->id_stavke
+        ]);
+
+        return redirect()->route('moderator.vinska.index');
     }
 
     /**
@@ -64,7 +73,7 @@ class MeniController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('moderator.vinska.edit')->with('stavke', Stavka::find($id));
     }
 
     /**
@@ -76,7 +85,20 @@ class MeniController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stavka = Stavka::find($id);
+        $stavka->naziv = $request->naziv;
+        $stavka->save();
+
+        return redirect()->route('moderator.vinska.index');
+    }
+
+
+    public function delete(Request $request, $id)
+    {
+        $stavka = Stavka::find($id);
+        $stavka->delete();
+
+        return redirect()->route('moderator.vinska.index');
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStavkasTable extends Migration
+class CreateStolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateStavkasTable extends Migration
      */
     public function up()
     {
-        Schema::create('stavkas', function (Blueprint $table) {
-            $table->bigIncrements('id_stavke');
+        Schema::create('stols', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('naziv', 255)->unique();
+            $table->string('status', 255);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateStavkasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stavkas');
+        Schema::dropIfExists('stols');
     }
 }

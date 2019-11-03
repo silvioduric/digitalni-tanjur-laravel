@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class MeniController extends Controller
         $meni = Meni::all();
         $meniStavka = MeniStavka::all();
         $stavka = Stavka::all();
-        return view('meni.index')->with('meni', $meni)->with('meniStavka', $meniStavka)->with('stavka', $stavka);
+        return view('moderator.meni.index')->with('meni', $meni)->with('meniStavka', $meniStavka)->with('stavka', $stavka);
     }
 
     /**
@@ -29,9 +29,9 @@ class MeniController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        return view('moderator.meni.create')->with('id_menija', $id);
     }
 
     /**
@@ -40,9 +40,18 @@ class MeniController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $novaStavka = Stavka::create([
+            'naziv' => $request->naziv
+        ]);
+
+        $meniStavka = MeniStavka::create([
+            'meni_id' => $id,
+            'stavka_id' => $novaStavka->id_stavke
+        ]);
+
+        return redirect()->route('moderator.meni.index');
     }
 
     /**
@@ -64,7 +73,7 @@ class MeniController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('moderator.meni.edit')->with('stavke', Stavka::find($id));
     }
 
     /**
@@ -76,7 +85,19 @@ class MeniController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stavka = Stavka::find($id);
+        $stavka->naziv = $request->naziv;
+        $stavka->save();
+
+        return redirect()->route('moderator.meni.index');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $stavka = Stavka::find($id);
+        $stavka->delete();
+
+        return redirect()->route('moderator.meni.index');
     }
 
     /**

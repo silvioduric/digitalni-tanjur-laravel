@@ -15,6 +15,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\TipKorisnika', 'korisnik_tip', 'korisnik_id', 'tip_korisnika_id');
     }
 
+    public function kuponi()
+    {
+        return $this->belongsToMany('App\KorisnikKupon', 'korisnik_kupons', 'korisnik_id', 'kupon_id');
+    }
+
     public function hasAnyRole($roles)
     {
         if (is_array($roles)) {

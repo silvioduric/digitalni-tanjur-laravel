@@ -11121,3 +11121,8 @@ a.text-dark:focus {
   font-size: 20px;
 }
 
+.form-check {
+  padding-left: 0 !important;
+  margin-bottom: 10px;
+}
+

@@ -1,29 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-@if(count($meni) > 1)
+@if(count($vinska) > 1)
 <div class="container">
   <div class="row">
-    <h1>Meni</h1>
+    <h1>Vinska karta</h1>
     <div id="accordion" class="accordion">
-      @foreach($meni as $m)
+      @foreach($vinska as $v)
       <div class="card">
         <div class="card-header" id="headingOne">
           <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$m->id_meni}}"
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$v->id_karte}}"
               aria-expanded="true" aria-controls="collapseOne">
-              {{$m->naslov}}
+              {{$v->naslov}}
             </button>
           </h5>
         </div>
 
-        <div id="collapse{{$m->id_meni}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="collapse{{$v->id_karte}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
-            @if(count($meniStavka) > 1 && count($stavka) > 1)
-              @foreach($meniStavka as $ms)
-                @if($ms->meni_id === $m->id_meni)
+            @if(count($vinskaStavka) > 1 && count($stavka) > 1)
+              @foreach($vinskaStavka as $vs)
+                @if($vs->vinska_karta_id === $v->id_karte)
                   @foreach($stavka as $s)
-                    @if($ms->stavka_id == $s->id_stavke)
+                    @if($vs->stavka_id == $s->id_stavke)
                       <a href="#" class="stavka">{{$s->naziv}}</a>
                     @endif
                   @endforeach

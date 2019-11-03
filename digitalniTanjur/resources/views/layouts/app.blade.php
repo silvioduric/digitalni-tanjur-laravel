@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/meni">Meni</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vinska">Vinska karta</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -62,7 +65,23 @@
                         
                             @if (Auth::user()->hasAnyRole('Moderator'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/moderator">Moderator dashboard</a>
+                                    <a class="nav-link" href="{{ route('moderator.index') }}">Moderator dashboard</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moderator.stolovi.index') }}">Stolovi</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moderator.meni.index') }}">Meni</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moderator.vinska.index') }}">Vinska karta</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moderator.kuponi.index') }}">Kuponi</a>
                                 </li>
                             @endif
                             

@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MeniStavkaTableSeeder::class); 
         $this->call(TipKorisnikaTableSeeder::class);
         $this->call(KorisnikTableSeeder::class);
-
+        $this->call(StolTableSeeder::class);
+        $this->call(KuponiTableSeeder::class);
+        $this->call(KorisnikKuponiTableSeeder::class);
     }
 }

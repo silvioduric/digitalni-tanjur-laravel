@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Meni;
-use App\MeniStavka;
+use App\VinskaKarta;
+use App\VinskaKartaStavka;
 use App\Stavka;
 use Illuminate\Support\Facades\Auth;
 
-class MeniController extends Controller
+class VinskaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class MeniController extends Controller
      */
     public function index()
     {
-        $meni = Meni::all();
-        $meniStavka = MeniStavka::all();
+        $vinska = VinskaKarta::all();
+        $vinskaStavka = VinskaKartaStavka::all();
         $stavka = Stavka::all();
-        return view('meni.index')->with('meni', $meni)->with('meniStavka', $meniStavka)->with('stavka', $stavka);
+        return view('vinska_karta.index')->with('vinska', $vinska)->with('vinskaStavka', $vinskaStavka)->with('stavka', $stavka);
     }
 
     /**
