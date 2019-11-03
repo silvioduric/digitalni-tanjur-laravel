@@ -75,21 +75,22 @@
                 <div class="top-left links">
                     <a href="/meni">Meni</a>
                     <a href="/vinska">Vinska karta</a>
+                    <a href="/recenzije">Recenzije</a>
                 </div>
                 <div class="top-right links">
                     @auth
                         @if (Auth::user()->hasAnyRole('Administrator'))
-                            <a href="{{ route('admin.index') }}">Home admin</a>
+                            <a href="{{ route('admin.index') }}">Admin početna</a>
                         @elseif (Auth::user()->hasAnyRole('Moderator'))
-                            <a href="{{ route('moderator.index') }}">Home moderator</a>
+                            <a href="{{ route('moderator.index') }}">Moderator početna</a>
                         @else
-                            <a href="{{ url('/home') }}">Home korisnik</a>
+                            <a href="{{ route('korisnik.index') }}">Korisnik početna</a>
                         @endif
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">Prijava</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Registracija</a>
                         @endif
                     @endauth
                 </div>

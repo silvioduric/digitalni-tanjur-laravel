@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StolTableSeeder::class);
         $this->call(KuponiTableSeeder::class);
         $this->call(KorisnikKuponiTableSeeder::class);
+        $this->call(RecenzijeTableSeeder::class);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -18,6 +18,11 @@ class User extends Authenticatable
     public function kuponi()
     {
         return $this->belongsToMany('App\KorisnikKupon', 'korisnik_kupons', 'korisnik_id', 'kupon_id');
+    }
+
+    public function rezervacije()
+    {
+        return $this->belongsToMany('App\Rezervacija', 'rezervacijas', 'korisnik_id', 'stol_id');
     }
 
     public function hasAnyRole($roles)

@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/vinska">Vinska karta</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/recenzije">Recenzije</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -46,17 +49,17 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Prijava') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registracija') }}</a>
                                 </li>
                             @endif
                         @else
                             @if (Auth::user()->hasAnyRole('Administrator'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/admin">Admin dashboard</a>
+                                    <a class="nav-link" href="/admin">Admin početna</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.korisnici.index') }}">Upravljanje korisnicima</a>
@@ -65,7 +68,7 @@
                         
                             @if (Auth::user()->hasAnyRole('Moderator'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('moderator.index') }}">Moderator dashboard</a>
+                                    <a class="nav-link" href="{{ route('moderator.index') }}">Moderator početna</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -84,6 +87,18 @@
                                     <a class="nav-link" href="{{ route('moderator.kuponi.index') }}">Kuponi</a>
                                 </li>
                             @endif
+
+                            @if (Auth::user()->hasAnyRole('Korisnik'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('korisnik.index') }}">Korisnik početna</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('korisnik.rezervacije.index') }}">Rezervacije</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('korisnik.recenzije.index') }}">Recenzije</a>
+                                </li>
+                            @endif
                             
                             <li class="nav-item dropdown">
                             
@@ -95,7 +110,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Odjava') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

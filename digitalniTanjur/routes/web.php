@@ -19,12 +19,13 @@ Route::get('/', function () {
 
 // Route::get('/admin', 'Admin\AdminController@index')->name('admin');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::resource('meni', 'MeniController');
 Route::resource('vinska', 'VinskaController');
+Route::resource('recenzije', 'RecenzijeController');
 
 
 // Route::resource('admin', 'AdminController')->middleware(['auth', 'roles.admin']);
@@ -35,6 +36,8 @@ Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'roles.admin'])-
 });
 
 Route::namespace('Moderator')->prefix('moderator')->middleware(['auth', 'roles.moderator'])->name('moderator.')->group(function(){
+    Route::resource('/', 'ModeratorController');
+
     // Stolovi rute
     Route::resource('/stolovi', 'StoloviController');
     Route::get('/stolovi/{stolovi}/status', 'StoloviController@status')->name('stolovi.status');
@@ -56,7 +59,7 @@ Route::namespace('Moderator')->prefix('moderator')->middleware(['auth', 'roles.m
     Route::put('/vinska/store/{id}/novi', 'VinskaController@store')->name('vinska.store.novi');
     Route::get('/vinska/{id}/delete', 'VinskaController@delete')->name('vinska.delete');
 
-    //Kuponi rute
+    // Kuponi rute
     Route::resource('/kuponi', 'KuponiController');
     Route::get('/kuponi/{id}/editNaziv', 'KuponiController@editNaziv')->name('kuponi.editNaziv');
     Route::put('/kuponi/{id}/updateNaziv', 'KuponiController@updateNaziv')->name('kuponi.updateNaziv');
@@ -66,8 +69,22 @@ Route::namespace('Moderator')->prefix('moderator')->middleware(['auth', 'roles.m
     Route::put('/kuponi/{id}/updateBodovi', 'KuponiController@updateBodovi')->name('kuponi.updateBodovi');
     Route::get('/kuponi/{id}/delete', 'KuponiController@delete')->name('kuponi.delete');
     Route::put('/kuponi/store/novi', 'KuponiController@store')->name('kuponi.store.novi');
+});
 
-    Route::resource('/', 'ModeratorController');
+
+Route::namespace('Korisnik')->prefix('korisnik')->middleware(['auth', 'roles.korisnik', 'verified'])->name('korisnik.')->group(function(){
+    Route::resource('/', 'KorisnikController');
+
+    // Rezervacije
+    Route::resource('/rezervacije', 'RezervacijaController');
+    Route::get('/rezervacije/create', 'RezervacijaController@create')->name('rezervacije.create');
+    Route::put('/rezervacije/store/novi', 'RezervacijaController@store')->name('rezervacije.store.novi');
+    Route::get('/rezervacije/{id}/delete', 'RezervacijaController@delete')->name('rezervacije.delete');
+
+    // Recenzije
+    Route::resource('/recenzije', 'RecenzijeController');
+    Route::get('/recenzije/create', 'RecenzijeController@create')->name('recenzije.create');
+    Route::put('/recenzije/store/novi', 'RecenzijeController@store')->name('recenzije.store.novi');
 });
 
 // Route::resource('moderator', 'ModeratorController')->middleware(['auth', 'roles']);

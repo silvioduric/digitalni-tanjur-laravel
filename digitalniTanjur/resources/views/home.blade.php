@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Korisnik dashboard</div>
+                <div class="card-header">Korisnik početna</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Dobrodošli na korisničke stranice!
                 </div>
             </div>
         </div>
