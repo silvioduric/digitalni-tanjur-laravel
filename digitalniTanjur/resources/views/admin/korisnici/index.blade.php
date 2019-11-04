@@ -20,9 +20,9 @@
                         <tbody>
                             @foreach($korisnici as $korisnik)
                             <tr>
-                                <th>{{$korisnik->firstName}}</th>
-                                <th>{{$korisnik->lastName}}</th>
-                                <th>{{$korisnik->email}}</th>
+                                <th><a href="{{ route('admin.korisnici.editIme', $korisnik->id) }}">{{$korisnik->firstName}}</a></th>
+                                <th><a href="{{ route('admin.korisnici.editPrezime', $korisnik->id) }}">{{$korisnik->lastName}}</a></th>
+                                <th><a href="{{ route('admin.korisnici.editEmail', $korisnik->id) }}">{{$korisnik->email}}</a></th>
                                 <th>{{ implode(', ',$korisnik->roles()->get()->pluck('naziv_tipa')->toArray()) }}</th>
                                 <th>
                                     <a href="{{ route('admin.korisnici.edit', $korisnik->id) }}">

@@ -18,8 +18,55 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+    function onSubmit(token) {
+        document.getElementById("register-form").submit();
+    }
+    </script>
+<script type="text/javascript">
+    function changemysize(myvalue) {
+        var div = document.getElementById("body");
+        var newSize =  myvalue + "px";
+
+        document.cookie = "fontCookie=" + newSize+"; path=/";
+    }
+</script>
+<script type="text/javascript">
+    function changemycolor(myvalue) {
+        var div = document.getElementById("body");
+        var newColor =  myvalue;
+
+        document.cookie = "colorCookie=" + newColor+"; path=/";
+    }
+</script>
+    <script>
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        function setFontSize() {
+            var cookieFont = getCookie("fontCookie");
+            var div = document.getElementById("body");
+            div.style.fontSize = cookieFont;
+        }
+
+        function setColor() {
+            var cookieColor = getCookie("colorCookie");
+            var div = document.getElementById("body");
+            div.style.backgroundColor = cookieColor;
+        }
+
+        function onloadAll() {
+            setFontSize();
+            setColor();
+        }
+    </script>
+    
 </head>
-<body>
+<body onload="onloadAll()" id="body">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -64,6 +111,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.korisnici.index') }}">Upravljanje korisnicima</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin/tema">Upravljanje temom</a>
+                                </li>
                             @endif
                         
                             @if (Auth::user()->hasAnyRole('Moderator'))
@@ -86,6 +136,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('moderator.kuponi.index') }}">Kuponi</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moderator.rezervacije.index') }}">Rezervacije</a>
+                                </li>
                             @endif
 
                             @if (Auth::user()->hasAnyRole('Korisnik'))
@@ -97,6 +151,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('korisnik.recenzije.index') }}">Recenzije</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('korisnik.kuponi.index') }}">Kuponi</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('korisnik.poruke.index') }}">Poruke</a>
                                 </li>
                             @endif
                             

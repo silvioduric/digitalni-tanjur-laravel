@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Korisnik;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Recenzije;
+use App\Poruka;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
-class RecenzijeController extends Controller
+class PorukaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class RecenzijeController extends Controller
      */
     public function index()
     {
-        return view('korisnik.recenzije.index')->with('recenzije', Recenzije::all())->with('korisnici', User::all());
+        return view('korisnik.poruke.index')->with('poruke', Poruka::all())->with('korisnici', User::all())->with('korisnik', Auth::user()->id);
     }
 
     /**
@@ -27,7 +27,7 @@ class RecenzijeController extends Controller
      */
     public function create()
     {
-        return view('korisnik.recenzije.create');
+        return view('korisnik.poruke.create')->with('korisnici', User::all());
     }
 
     /**
@@ -40,15 +40,16 @@ class RecenzijeController extends Controller
     {
         $korisnik = User::find(Auth::user()->id);
 
-        $novaRecenzija = Recenzije::create([
-            'recenzija' => $request->recenzija,
-            'korisnik_id' => Auth::user()->id
+        $noviUnos = Poruka::create([
+            'poruka' => $request->poruka,
+            'primatelj_id' => $request->korisnik,
+            'posiljatelj_id' => Auth::user()->id
         ]);
 
-        $korisnik->bodovi = $korisnik->bodovi + 20;
+        $korisnik->bodovi = $korisnik->bodovi + 5;
         $korisnik->save();
 
-        return redirect()->route('korisnik.recenzije.index');
+        return redirect()->route('korisnik.poruke.index')->with('poruka', 'Poruka uspješno poslana!');
     }
 
     /**
@@ -83,6 +84,20 @@ class RecenzijeController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+    public function delete(Request $request, $id)
+    {
+        $korisnikData = User::find(Auth::user()->id);
+
+        $poruka = Poruka::find($id);
+        $poruka->delete();
+
+        $korisnikData->bodovi = $korisnikData->bodovi - 5;
+        $korisnikData->save();
+
+        return redirect()->route('korisnik.poruke.index');
     }
 
     /**

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Korisnik;
+namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Rezervacija;
+use App\Stol;
 use Illuminate\Support\Facades\Auth;
-use App\Recenzije;
-use App\User;
+use DateTime;
 
-class RecenzijeController extends Controller
+class RezervacijaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class RecenzijeController extends Controller
      */
     public function index()
     {
-        return view('korisnik.recenzije.index')->with('recenzije', Recenzije::all())->with('korisnici', User::all());
+        return view('moderator.rezervacije.index')->with('rezervacije', Rezervacija::all())->with('stolovi', Stol::all())->with('korisnik', Auth::user()->id);
     }
 
     /**
@@ -27,7 +28,7 @@ class RecenzijeController extends Controller
      */
     public function create()
     {
-        return view('korisnik.recenzije.create');
+        //
     }
 
     /**
@@ -38,17 +39,7 @@ class RecenzijeController extends Controller
      */
     public function store(Request $request)
     {
-        $korisnik = User::find(Auth::user()->id);
-
-        $novaRecenzija = Recenzije::create([
-            'recenzija' => $request->recenzija,
-            'korisnik_id' => Auth::user()->id
-        ]);
-
-        $korisnik->bodovi = $korisnik->bodovi + 20;
-        $korisnik->save();
-
-        return redirect()->route('korisnik.recenzije.index');
+        //
     }
 
     /**
@@ -83,6 +74,14 @@ class RecenzijeController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $rezervacija = Rezervacija::find($id);
+        $rezervacija->delete();
+
+        return redirect()->route('moderator.rezervacije.index');
     }
 
     /**

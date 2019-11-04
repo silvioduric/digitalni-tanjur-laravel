@@ -42,7 +42,7 @@ class KorisnikTableSeeder extends Seeder
         $korisnik->lastName = 'Korisnik';
         $korisnik->email = 'silvio@korisnik.com';
         $korisnik->password = bcrypt('korisnik');
-        $korisnik->bodovi = '0';
+        $korisnik->bodovi = '200';
         $korisnik->save();
         $korisnik->roles()->attach($tipKorisnik);
 

@@ -80,11 +80,11 @@
                 <div class="top-right links">
                     @auth
                         @if (Auth::user()->hasAnyRole('Administrator'))
-                            <a href="{{ route('admin.index') }}">Admin početna</a>
+                            <script>window.location = "/admin";</script>
                         @elseif (Auth::user()->hasAnyRole('Moderator'))
-                            <a href="{{ route('moderator.index') }}">Moderator početna</a>
+                            <script>window.location = "/moderator";</script>
                         @else
-                            <a href="{{ route('korisnik.index') }}">Korisnik početna</a>
+                            <script>window.location = "/korisnik";</script>
                         @endif
                     @else
                         <a href="{{ route('login') }}">Prijava</a>

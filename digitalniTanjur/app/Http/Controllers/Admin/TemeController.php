@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Korisnik;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Recenzije;
-use App\User;
 
-class RecenzijeController extends Controller
+class TemeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +15,7 @@ class RecenzijeController extends Controller
      */
     public function index()
     {
-        return view('korisnik.recenzije.index')->with('recenzije', Recenzije::all())->with('korisnici', User::all());
+        return view('admin.tema');
     }
 
     /**
@@ -27,7 +25,7 @@ class RecenzijeController extends Controller
      */
     public function create()
     {
-        return view('korisnik.recenzije.create');
+        //
     }
 
     /**
@@ -38,17 +36,7 @@ class RecenzijeController extends Controller
      */
     public function store(Request $request)
     {
-        $korisnik = User::find(Auth::user()->id);
-
-        $novaRecenzija = Recenzije::create([
-            'recenzija' => $request->recenzija,
-            'korisnik_id' => Auth::user()->id
-        ]);
-
-        $korisnik->bodovi = $korisnik->bodovi + 20;
-        $korisnik->save();
-
-        return redirect()->route('korisnik.recenzije.index');
+        //
     }
 
     /**

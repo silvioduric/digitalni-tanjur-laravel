@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rezervacija;
 use App\Stol;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 
@@ -42,6 +43,7 @@ class RezervacijaController extends Controller
         $rezervacije = Rezervacija::all();
         $dt = new DateTime();
         $current = $dt->format('Y-m-d');
+        $stol = Stol::find($request->stol);
         
         foreach($rezervacije as $rezervacija) {
             if ($rezervacija->datum == $request->datum && $rezervacija->vrijeme == $request->vrijeme) {
@@ -50,12 +52,20 @@ class RezervacijaController extends Controller
         }
 
         if ($request->datum > $current) {
-            $novaRezervacija = Rezervacija::create([
-                'datum' => $request->datum,
-                'vrijeme' => $request->vrijeme,
-                'stol_id' => $request->stol,
-                'korisnik_id' => Auth::user()->id
-            ]);
+            if ($stol->status == 'Slobodan') {
+                $korisnikData = User::find(Auth::user()->id);
+                $novaRezervacija = Rezervacija::create([
+                    'datum' => $request->datum,
+                    'vrijeme' => $request->vrijeme,
+                    'stol_id' => $request->stol,
+                    'korisnik_id' => Auth::user()->id
+                ]);
+
+                $korisnikData->bodovi = $korisnikData->bodovi + 35;
+                $korisnikData->save();
+            } else {
+                return redirect()->route('korisnik.rezervacije.index')->with('poruka', 'Odabrani stol je pod rezervacijom od strane administratora odaberite neki drugi stol!');
+            }
         } else {
             return redirect()->route('korisnik.rezervacije.index')->with('poruka', 'Datum mora biti današnji ili kasniji!');
         }
@@ -100,8 +110,13 @@ class RezervacijaController extends Controller
 
     public function delete(Request $request, $id)
     {
+        $korisnikData = User::find(Auth::user()->id);
+
         $rezervacija = Rezervacija::find($id);
         $rezervacija->delete();
+
+        $korisnikData->bodovi = $korisnikData->bodovi - 35;
+        $korisnikData->save();
 
         return redirect()->route('korisnik.rezervacije.index');
     }

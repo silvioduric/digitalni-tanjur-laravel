@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Korisnik;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Recenzije;
+use App\Kuponi;
 use App\User;
+use App\KorisnikKupon;
+use Illuminate\Support\Facades\Auth;
 
-class RecenzijeController extends Controller
+class KuponiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,17 @@ class RecenzijeController extends Controller
      */
     public function index()
     {
-        return view('korisnik.recenzije.index')->with('recenzije', Recenzije::all())->with('korisnici', User::all());
+        return view('korisnik.kuponi.index')->with('kuponi', Kuponi::all())->with('korisnik', User::find(Auth::user()->id))->with('korisnikKuponi', KorisnikKupon::all());
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function popis()
+    {
+        return view('korisnik.kuponi.popis')->with('kuponi', Kuponi::all())->with('korisnik', User::find(Auth::user()->id));
     }
 
     /**
@@ -27,7 +38,18 @@ class RecenzijeController extends Controller
      */
     public function create()
     {
-        return view('korisnik.recenzije.create');
+        //
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function kupovina($id)
+    {
+        return view('korisnik.kuponi.kupovina')->with('kupon', Kuponi::find($id));
     }
 
     /**
@@ -36,19 +58,24 @@ class RecenzijeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $korisnik = User::find(Auth::user()->id);
+        $kupon = Kuponi::find($id);
 
-        $novaRecenzija = Recenzije::create([
-            'recenzija' => $request->recenzija,
-            'korisnik_id' => Auth::user()->id
-        ]);
+        if ($korisnik->bodovi >= $kupon->bodovna_cijena) {
+            $noviUnos = KorisnikKupon::create([
+                'korisnik_id' => $korisnik->id,
+                'kupon_id' => $kupon->id,
+            ]);
 
-        $korisnik->bodovi = $korisnik->bodovi + 20;
-        $korisnik->save();
+            $korisnik->bodovi = $korisnik->bodovi - $kupon->bodovna_cijena;
+            $korisnik->save();
 
-        return redirect()->route('korisnik.recenzije.index');
+            return redirect()->route('korisnik.kuponi.popis')->with('poruka', 'Uspješno ste kupili kupon!');
+        } else {
+            return redirect()->route('korisnik.kuponi.popis')->with('poruka', 'Nemate dovoljno bodova za kupovinu!');
+        }
     }
 
     /**
