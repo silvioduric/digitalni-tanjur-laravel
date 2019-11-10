@@ -21,6 +21,6 @@ class ProvjeriTipKorisnikaModerator
             return $next($request);
         }
 
-        return redirect('/home');
+        return redirect('/moderator');
     }
 }

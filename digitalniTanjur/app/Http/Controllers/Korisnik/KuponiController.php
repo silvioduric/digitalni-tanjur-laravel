@@ -69,8 +69,10 @@ class KuponiController extends Controller
                 'kupon_id' => $kupon->id,
             ]);
 
-            $korisnik->bodovi = $korisnik->bodovi - $kupon->bodovna_cijena;
-            $korisnik->save();
+            if ($korisnik->bodovi != 0) {
+                $korisnik->bodovi = $korisnik->bodovi - $kupon->bodovna_cijena;
+                $korisnik->save();
+            }
 
             return redirect()->route('korisnik.kuponi.popis')->with('poruka', 'Uspješno ste kupili kupon!');
         } else {

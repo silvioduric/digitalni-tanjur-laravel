@@ -15,6 +15,7 @@
               {{$v->naslov}}
             </button>
           </h5>
+          <img src="{{$v->slika}}" alt="" style="width: 20%; border-radius: 10px;">
         </div>
 
         <div id="collapse{{$v->id_karte}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -25,6 +26,7 @@
                   @foreach($stavka as $s)
                     @if($vs->stavka_id == $s->id_stavke)
                       <a href="#" class="stavka">{{$s->naziv}}</a>
+                      <img src="{{$s->slika}}" alt="" style="width: 10%; border-radius: 10px;">
                     @endif
                   @endforeach
                 @else

@@ -63,6 +63,8 @@ Route::namespace('Moderator')->prefix('moderator')->middleware(['auth', 'roles.m
     Route::get('/meni/{id}/create', 'MeniController@create')->name('meni.create');
     Route::put('/meni/store/{id}/novi', 'MeniController@store')->name('meni.store.novi');
     Route::get('/meni/{id}/delete', 'MeniController@delete')->name('meni.delete');
+    Route::get('/createNovi', 'MeniController@createNovi')->name('meni.createNovi');
+    Route::put('/store/storeNovi', 'MeniController@storeNovi')->name('meni.storeNovi.novi');
 
     // Vinska rute
     Route::resource('/vinska', 'VinskaController');

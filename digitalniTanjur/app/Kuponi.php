@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 
 class Kuponi extends Model
 {
+    protected $softCascade = [''];
+
     protected $fillable = [
         'naziv', 'opis', 'bodovna_cijena'
     ];

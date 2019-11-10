@@ -21,6 +21,6 @@ class ProvjeriTipKorisnikaKorisnik
             return $next($request);
         }
 
-        return redirect('/home');
+        return redirect('/korisnik');
     }
 }

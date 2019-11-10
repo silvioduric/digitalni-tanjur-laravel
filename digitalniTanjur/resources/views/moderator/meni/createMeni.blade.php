@@ -5,14 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Kreiranje nove recenzije</span></div>
+                <div class="card-header">Kreiranje novog menija</span></div>
                 <div class="card-body">
-                    <form action="{{ route('korisnik.recenzije.store.novi') }}" method="POST">
+                    <form action="{{ route('moderator.meni.storeNovi.novi') }}" method="POST">
                         {{csrf_field()}}
                         {{method_field('PUT')}}
                             <div class="form-check">
-                                <label>Recenzija</label>
-                                <textarea class="form-control" id="recenzija" name="recenzija" rows="3"></textarea>
+                                <label>Naslov</label>
+                                <input class="form-control" type="text" name="naslov" value="">
+                                <label>Url slike</label>
+                                <textarea class="form-control" id="slika" name="slika" rows="2"></textarea>
                             </div>
                         <button type="submit" class="btn btn-primary btn-sm">Kreiraj</button>
                     </form>

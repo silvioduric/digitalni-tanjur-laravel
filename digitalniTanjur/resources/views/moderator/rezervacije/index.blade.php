@@ -11,7 +11,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">Datum</th>
-                                <th scope="col">Vrijeme</th>
+                                <th scope="col">Vrijeme od</th>
+                                <th scope="col">Vrijeme do</th>
                                 <th scope="col">Stol</th>
                                 <th scope="col">Otkazivanje</th>
                             </tr>
@@ -19,8 +20,9 @@
                         <tbody>
                             @foreach($rezervacije as $rezervacija)
                             <tr>
-                                <th>{{$rezervacija->datum}}</th>
-                                <th>{{$rezervacija->vrijeme}}</th>
+                                <th>{{date('d-m-Y', strtotime($rezervacija->datum))}}</th>
+                                <th>{{$rezervacija->vrijeme_od}}</th>
+                                <th>{{$rezervacija->vrijeme_do}}</th>
                                 @foreach($stolovi as $stol)
                                   @if($stol->id == $rezervacija->stol_id)
                                     <th>{{$stol->naziv}}</th>

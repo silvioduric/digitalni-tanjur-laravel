@@ -15,9 +15,9 @@ class CreateRecenzijesTable extends Migration
     {
         Schema::create('recenzijes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('recenzija', 255);
+            $table->text('recenzija');
             $table->unsignedBigInteger('korisnik_id');
-            $table->foreign('korisnik_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('korisnik_id')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();
         });
     }

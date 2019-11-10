@@ -15,10 +15,8 @@ class CreateKorisnikKuponsTable extends Migration
     {
         Schema::create('korisnik_kupons', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('korisnik_id');
-            $table->unsignedBigInteger('kupon_id');
-            $table->foreign('korisnik_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('kupon_id')->references('id')->on('kuponis')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('korisnik_id')->unsigned();
+            $table->integer('kupon_id')->unsigned();
             $table->timestamps();
         });
     }

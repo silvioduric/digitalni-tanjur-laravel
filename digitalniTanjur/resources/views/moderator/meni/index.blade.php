@@ -70,6 +70,11 @@
         </div>
       </div>
       @endforeach
+      <div>
+        <a href="/moderator/createNovi">
+          <button type="button" class="btn btn-primary btn-sm">Dodaj novi meni</button>
+        </a>
+      </div>
     </div>
   </div>
 </div>

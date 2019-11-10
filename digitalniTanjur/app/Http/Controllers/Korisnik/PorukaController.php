@@ -94,8 +94,10 @@ class PorukaController extends Controller
         $poruka = Poruka::find($id);
         $poruka->delete();
 
-        $korisnikData->bodovi = $korisnikData->bodovi - 5;
-        $korisnikData->save();
+        if ($korisnikData->bodovi != 0) {
+            $korisnikData->bodovi = $korisnikData->bodovi - 5;
+            $korisnikData->save();
+        }
 
         return redirect()->route('korisnik.poruke.index');
     }

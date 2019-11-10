@@ -13,8 +13,10 @@
                             <div class="form-check">
                                 <label>Datum</label>
                                 <input class="form-control" type="date" name="datum" value="">
-                                <label>Vrijeme</label>
-                                <input class="form-control" type="time" name="vrijeme" value="">
+                                <label>Vrijeme od</label>
+                                <input class="form-control" type="time" name="vrijemeOd" value="">
+                                <label>Vrijeme do</label>
+                                <input class="form-control" type="time" name="vrijemeDo" value="">
                                 <label>Stol</label>
                                 <div class="form-group">
                                   <select class="custom-select" name="stol">

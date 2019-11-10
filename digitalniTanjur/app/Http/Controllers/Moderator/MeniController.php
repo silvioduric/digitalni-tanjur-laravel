@@ -35,6 +35,17 @@ class MeniController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createNovi()
+    {
+        return view('moderator.meni.createMeni');
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -43,12 +54,29 @@ class MeniController extends Controller
     public function store(Request $request, $id)
     {
         $novaStavka = Stavka::create([
-            'naziv' => $request->naziv
+            'naziv' => $request->naziv,
+            'slika' => $request->slika
         ]);
 
         $meniStavka = MeniStavka::create([
             'meni_id' => $id,
             'stavka_id' => $novaStavka->id_stavke
+        ]);
+
+        return redirect()->route('moderator.meni.index');
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeNovi(Request $request)
+    {
+        $noviMeni = Meni::create([
+            'naslov' => $request->naslov,
+            'slika' => $request->slika
         ]);
 
         return redirect()->route('moderator.meni.index');

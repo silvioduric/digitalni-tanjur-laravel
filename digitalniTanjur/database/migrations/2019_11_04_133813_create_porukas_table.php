@@ -18,8 +18,8 @@ class CreatePorukasTable extends Migration
             $table->string('poruka', 255);
             $table->unsignedBigInteger('primatelj_id');
             $table->unsignedBigInteger('posiljatelj_id');
-            $table->foreign('primatelj_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('posiljatelj_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('primatelj_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('posiljatelj_id')->references('id')->on('users')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -10,6 +10,6 @@ class Stavka extends Model
     protected $primaryKey = 'id_stavke';
 
     protected $fillable = [
-        'naziv',
+        'naziv', 'slika'
     ];
 }

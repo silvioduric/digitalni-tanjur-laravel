@@ -54,15 +54,24 @@ class RezervacijaController extends Controller
         if ($request->datum > $current) {
             if ($stol->status == 'Slobodan') {
                 $korisnikData = User::find(Auth::user()->id);
-                $novaRezervacija = Rezervacija::create([
-                    'datum' => $request->datum,
-                    'vrijeme' => $request->vrijeme,
-                    'stol_id' => $request->stol,
-                    'korisnik_id' => Auth::user()->id
-                ]);
-
-                $korisnikData->bodovi = $korisnikData->bodovi + 35;
-                $korisnikData->save();
+                if ($request->vrijemeDo > $request->vrijemeOd) {
+                    if ((strtotime($request->vrijemeDo) - strtotime($request->vrijemeOd))/3600 <= 2) {
+                        $novaRezervacija = Rezervacija::create([
+                            'datum' => $request->datum,
+                            'vrijeme_od' => $request->vrijemeOd,
+                            'vrijeme_do' => $request->vrijemeDo,
+                            'stol_id' => $request->stol,
+                            'korisnik_id' => Auth::user()->id
+                        ]);
+        
+                        $korisnikData->bodovi = $korisnikData->bodovi + 35;
+                        $korisnikData->save();
+                    } else {
+                        return redirect()->route('korisnik.rezervacije.index')->with('poruka', 'Rezervacija ne može trajati više od 2 sata');
+                    } 
+                } else {
+                    return redirect()->route('korisnik.rezervacije.index')->with('poruka', 'Vrijeme od veće od vremena do što nije ispravan unos');
+                }
             } else {
                 return redirect()->route('korisnik.rezervacije.index')->with('poruka', 'Odabrani stol je pod rezervacijom od strane administratora odaberite neki drugi stol!');
             }
@@ -115,9 +124,11 @@ class RezervacijaController extends Controller
         $rezervacija = Rezervacija::find($id);
         $rezervacija->delete();
 
-        $korisnikData->bodovi = $korisnikData->bodovi - 35;
-        $korisnikData->save();
-
+        if ($korisnikData->bodovi != 0) {
+            $korisnikData->bodovi = $korisnikData->bodovi - 35;
+            $korisnikData->save();
+        }
+        
         return redirect()->route('korisnik.rezervacije.index');
     }
 

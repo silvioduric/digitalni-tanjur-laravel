@@ -13,6 +13,8 @@
                             <div class="form-check">
                                 <label>Naziv stavke</label>
                                 <input class="form-control" type="text" name="naziv" value="">
+                                <label>Url slike</label>
+                                <textarea class="form-control" id="slika" name="slika" rows="2"></textarea>
                             </div>
                         <button type="submit" class="btn btn-primary btn-sm">Kreiraj</button>
                     </form>

@@ -16,6 +16,7 @@ class CreateVinskaKartasTable extends Migration
         Schema::create('vinska_kartas', function (Blueprint $table) {
             $table->bigIncrements('id_karte');
             $table->string('naslov', 255);
+            $table->text('slika');
             $table->timestamps();
         });
     }

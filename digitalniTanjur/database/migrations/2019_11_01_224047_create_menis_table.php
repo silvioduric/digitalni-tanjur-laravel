@@ -16,6 +16,7 @@ class CreateMenisTable extends Migration
         Schema::create('menis', function (Blueprint $table) {
             $table->bigIncrements('id_meni');
             $table->string('naslov', 255);
+            $table->text('slika');
             $table->timestamps();
         });
     }

@@ -16,11 +16,12 @@ class CreateRezervacijasTable extends Migration
         Schema::create('rezervacijas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('datum');
-            $table->time('vrijeme');
+            $table->time('vrijeme_od');
+            $table->time('vrijeme_do');
             $table->unsignedBigInteger('korisnik_id');
             $table->unsignedBigInteger('stol_id');
-            $table->foreign('korisnik_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('stol_id')->references('id')->on('stols')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('korisnik_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('stol_id')->references('id')->on('stols')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class CreateStavkasTable extends Migration
         Schema::create('stavkas', function (Blueprint $table) {
             $table->bigIncrements('id_stavke');
             $table->string('naziv', 255)->unique();
+            $table->text('slika');
             $table->timestamps();
         });
     }
